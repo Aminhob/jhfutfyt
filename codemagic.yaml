@@ -1,23 +1,17 @@
 workflows:
-  android-workflow:
-    name: Build Android APK
+  expo-android:
+    name: Expo Android Build
     max_build_duration: 60
     environment:
-      vars:
-        PACKAGE_NAME: "com.amin.jhfutfyt"   # beddel package name-kaaga
       node: latest
-      java: 17
+      npm: latest
     scripts:
       - name: Install dependencies
         script: |
+          npm install -g expo-cli eas-cli
           npm install
-      - name: Build APK
+      - name: Build APK with EAS
         script: |
-          cd android
-          ./gradlew assembleRelease
+          eas build --platform android --non-interactive --profile preview
     artifacts:
-      - android/app/build/outputs/**/*.apk
-    publishing:
-      email:
-        recipients:
-          - "amiin4dm@gmail.com"
+      - build/**/*.apk
